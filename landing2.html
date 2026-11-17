@@ -46,15 +46,19 @@ a{color:inherit;text-decoration:none}
 .hero-track{display:flex;gap:2px;height:100%;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:none}
 .hero-track::-webkit-scrollbar{display:none}
 .hero-panel{position:relative;flex:0 0 84%;scroll-snap-align:center;overflow:hidden;background:var(--bg-2);opacity:0;transform:translateX(-7%)}
-.hero-panel.in{animation:panel-fade .9s var(--ease-out) forwards}
 @keyframes panel-fade{to{opacity:1;transform:translateX(0)}}
 @keyframes panel-in{to{clip-path:inset(0 0 0 0)}}
+/* IO-driven reveal is mobile-only; desktop uses timed CSS animations.
+   Unscoped, .in would override the desktop panel-in wipe and re-hide the panels. */
+@media (max-width:899px){
+  .hero-panel.in{animation:panel-fade .9s var(--ease-out) forwards}
+  .hero-panel.in video{animation:video-settle 1.8s var(--ease-out) forwards}
+  .hero-panel.in .panel-label{animation:label-in .8s var(--ease-out) .4s forwards}
+}
 .hero-panel video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transform:scale(1.15)}
-.hero-panel.in video{animation:video-settle 1.8s var(--ease-out) forwards}
 @keyframes video-settle{to{transform:scale(1)}}
 .hero-panel .veil{position:absolute;inset:0;background:linear-gradient(180deg,rgba(20,22,24,.28) 0%,rgba(20,22,24,0) 30%,rgba(20,22,24,0) 62%,rgba(20,22,24,.38) 100%)}
 .hero-panel .panel-label{position:absolute;left:20px;bottom:18px;color:#fff;display:flex;flex-direction:column;gap:3px;opacity:0;transform:translateY(12px)}
-.hero-panel.in .panel-label{animation:label-in .8s var(--ease-out) .4s forwards}
 @keyframes label-in{to{opacity:1;transform:translateY(0)}}
 .panel-label .idx{font-size:9px;letter-spacing:.3em;text-transform:uppercase;opacity:.75}
 .panel-label .name{font-size:14px;font-weight:500;letter-spacing:.02em}
