@@ -82,11 +82,13 @@ a{color:inherit;text-decoration:none}
 /* ============ FILM (mobile-first: 220vh sticky beats) ============ */
 .film{height:220vh;position:relative;background:#191b1d}
 .film-sticky{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden}
-.film-sticky video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.film-sticky video{position:absolute;top:0;left:0;right:0;bottom:0;width:100%;height:100%;object-fit:cover}
 .film-sticky .veil{position:absolute;inset:0;background:rgba(18,20,22,.42)}
-.film-words{position:absolute;inset:0;display:grid;place-items:center}
-.film-word{position:absolute;font-size:clamp(44px,13vw,72px);font-weight:100;letter-spacing:-.04em;color:#fff;opacity:0;transform:scale(.96);transition:opacity .35s var(--ease),transform .35s var(--ease);text-align:center}
-.film-word.on{opacity:1;transform:scale(1)}
+.film-words{position:absolute;top:0;left:0;right:0;bottom:0}
+/* Explicit centering (Safari does not apply grid place-items to abspos children);
+   exit is instant so switching words never cross-fade into an unreadable stack */
+.film-word{position:absolute;left:50%;top:50%;width:max-content;max-width:86vw;transform:translate(-50%,-50%) scale(.96);font-size:clamp(44px,13vw,72px);font-weight:100;letter-spacing:-.04em;color:#fff;opacity:0;text-align:center}
+.film-word.on{opacity:1;transform:translate(-50%,-50%) scale(1);transition:opacity .35s var(--ease),transform .35s var(--ease)}
 .film-word small{display:block;font-size:9px;font-weight:300;letter-spacing:.3em;text-transform:uppercase;opacity:.7;margin-top:12px}
 .film-progress{position:absolute;left:50%;bottom:32px;transform:translateX(-50%);display:flex;gap:10px}
 .film-progress i{width:22px;height:2px;background:rgba(255,255,255,.25);transition:background .3s}
@@ -273,7 +275,7 @@ footer a:hover{color:var(--white)}
 <!-- ================= FILM ================= -->
 <section class="film" aria-label="The ritual">
   <div class="film-sticky">
-    <video id="filmVideo" src="cdn/shop/videos/c/vp/a47f974ab42f4286b052bff1dc6ccd52/a47f974ab42f4286b052bff1dc6ccd52.HD-1080p-7.2Mbps-27230970.mp4" poster="cdn/shop/files/preview_images/a47f974ab42f4286b052bff1dc6ccd52.thumbnail.0000000000_2048x.jpg" muted loop playsinline preload="metadata"></video>
+    <video id="filmVideo" src="cdn/shop/videos/c/vp/a47f974ab42f4286b052bff1dc6ccd52/a47f974ab42f4286b052bff1dc6ccd52.HD-1080p-7.2Mbps-27230970.mp4" poster="cdn/shop/files/preview_images/a47f974ab42f4286b052bff1dc6ccd52.thumbnail.0000000000_2048x.jpg" autoplay muted loop playsinline preload="metadata"></video>
     <div class="veil"></div>
     <div class="film-words">
       <div class="film-word" data-word="0">Cleanse.<small>Gel &middot; Double Cleanser</small></div>
