@@ -254,7 +254,7 @@ footer a:hover{color:var(--white)}
 <section class="hero" aria-label="The Concern Scripts">
   <div class="hero-track">
     <a class="hero-panel" href="products/the-youth-script.html">
-      <video poster="cdn/shop/files/preview_images/597150cbac16497b8bca25d5b8c1caed.thumbnail.0000000000_700x.jpg" muted loop playsinline preload="auto">
+      <video poster="cdn/shop/files/preview_images/597150cbac16497b8bca25d5b8c1caed.thumbnail.0000000000_700x.jpg" autoplay muted loop playsinline preload="auto">
         <source src="cdn/shop/videos/c/vp/597150cbac16497b8bca25d5b8c1caed/hero-mobile.mp4" type="video/mp4" media="(width < 900px)">
         <source src="cdn/shop/videos/c/vp/597150cbac16497b8bca25d5b8c1caed/597150cbac16497b8bca25d5b8c1caed.HD-1080p-7.2Mbps-30884455.mp4" type="video/mp4">
       </video>
@@ -494,15 +494,16 @@ footer a:hover{color:var(--white)}
     var panels = Array.from(track.children);
     var heroVideos = hero.querySelectorAll('video');
     var visiblePanels = new Set();
-    var heroInView = false;
+    var heroInView = null;
     var heroVisible = false;
     var manualScroll = false;
+    var waitForFirstVideo = heroVideos[0].currentTime === 0;
     var autoScrollTimer;
     var autoScrollFrame;
 
     function configureHeroVideos(){
       heroVideos.forEach(function(video, index){
-        video.autoplay = desktop.matches;
+        video.autoplay = desktop.matches || (index === 0 && !motionPreference.matches);
         video.preload = desktop.matches || index === 0 ? 'auto' : 'none';
       });
     }
@@ -547,6 +548,7 @@ footer a:hover{color:var(--white)}
       }
 
       autoScrollTimer = setTimeout(function(){
+        waitForFirstVideo = false;
         var maxScroll = track.scrollWidth - track.clientWidth;
         var stops = panels.map(function(panel){
           var center = panel.offsetLeft - panels[0].offsetLeft + panel.offsetWidth / 2;
@@ -557,7 +559,7 @@ footer a:hover{color:var(--white)}
         preloadHeroVideo(heroVideos[nextIndex]);
         animateHeroScroll(stops[nextIndex], next < 0 ? 850 : 650);
         scheduleAutoScroll();
-      }, 1500);
+      }, waitForFirstVideo ? 3500 : 1500);
     }
 
     ['pointerdown', 'wheel', 'keydown'].forEach(function(event){
@@ -574,11 +576,13 @@ footer a:hover{color:var(--white)}
     }
 
     function updateHeroPlayback(){
+      if(heroInView === null) return;
       var canPlay = heroInView && !motionPreference.matches && (desktop.matches || !document.hidden);
       heroVideos.forEach(function(video, index){
-        if(canPlay && (desktop.matches || visiblePanels.has(panels[index]))){
+        var startingFirstVideo = index === 0 && waitForFirstVideo && !manualScroll;
+        if(canPlay && (desktop.matches || startingFirstVideo || visiblePanels.has(panels[index]))){
           if(!desktop.matches) preloadHeroVideo(video);
-          if(video.paused && (desktop.matches || hasBufferedPlayback(video))) video.play().catch(function(){});
+          if(video.paused && (desktop.matches || index === 0 || hasBufferedPlayback(video))) video.play().catch(function(){});
         } else {
           video.pause();
         }
@@ -612,8 +616,16 @@ footer a:hover{color:var(--white)}
         preloadHeroVideo(heroVideos[i]);
       }
     }
-    heroVideos[0].addEventListener('playing', preloadRemainingHeroVideos);
-    heroVideos[0].addEventListener('error', preloadRemainingHeroVideos, {once:true});
+
+    function onFirstVideoReady(){
+      preloadRemainingHeroVideos();
+      if(!waitForFirstVideo) return;
+      waitForFirstVideo = false;
+      scheduleAutoScroll();
+    }
+    heroVideos[0].addEventListener('playing', onFirstVideoReady);
+    heroVideos[0].addEventListener('error', onFirstVideoReady, {once:true});
+    if(!waitForFirstVideo) preloadRemainingHeroVideos();
     heroVideos.forEach(function(video){
       video.addEventListener('progress', updateHeroPlayback);
       video.addEventListener('loadeddata', updateHeroPlayback);
