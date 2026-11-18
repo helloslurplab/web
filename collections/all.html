@@ -466,6 +466,83 @@ window.ShopifyPay.apiHost = "shop.app\/pay";</script>
     window.ShopifyAnalytics.meta[attr] = meta[attr];
   }
 </script>
+<style>
+  html { overscroll-behavior: none; }
+
+  #CollectionProductGrid .card__inner .image-product-link {
+    position: relative;
+    width: auto;
+    height: auto;
+    z-index: auto;
+  }
+
+  #main-collection-product-grid .grid__item[data-handle="hydromer-mist"] .media img {
+    transform: scale(.77);
+  }
+
+  @media (min-width: 768px) {
+    #main-collection-product-grid .grid__item[data-handle="preparationb5"] .media img {
+      translate: 0 2.8%;
+    }
+  }
+
+  @media (max-width: 767px) {
+    #main-collection-product-grid {
+      --collection-grid-gutter: .5rem;
+    }
+
+    #main-collection-product-grid .grid__item {
+      --title-inset: 4vw;
+    }
+
+    #main-collection-product-grid .scripts-prd-grid .grid__item {
+      --title-inset: calc(4vw + var(--collection-grid-gutter));
+    }
+
+    #CollectionProductGrid ul#main-collection-product-grid .scripts-prd-grid li.grid__item .card-information__wrapper {
+      padding-left: var(--title-inset);
+      padding-right: var(--title-inset);
+    }
+
+    /* Left edge of the packaging within each transparent source image. */
+    #main-collection-product-grid [data-handle="the-youth-script"] { --packaging-left: 5.8%; }
+    #main-collection-product-grid [data-handle="the-breakouts-script"] { --packaging-left: 3.7%; }
+    #main-collection-product-grid [data-handle="complexion-script"] { --packaging-left: 7%; }
+    #main-collection-product-grid [data-handle="hydromer-mist"] { --packaging-left: 19.9%; }
+    #main-collection-product-grid [data-handle="preparationb5"] { --packaging-left: 24.2%; }
+    #main-collection-product-grid [data-handle="gel"] { --packaging-left: 22.4%; }
+    #main-collection-product-grid [data-handle="hydromer"] { --packaging-left: 28.4%; }
+    #main-collection-product-grid [data-handle="decalt"] { --packaging-left: 21.4%; }
+    #main-collection-product-grid [data-handle="hyaluid"] { --packaging-left: 21.3%; }
+    #main-collection-product-grid [data-handle="niacid"] { --packaging-left: 24.1%; }
+
+    #CollectionProductGrid ul#main-collection-product-grid li.grid__item .media img {
+      margin-left: 0;
+      transform-origin: var(--packaging-left, 0%) center;
+      translate: calc(var(--title-inset) - var(--packaging-left, 0%));
+    }
+
+    #CollectionProductGrid ul#main-collection-product-grid .grid__item[data-handle="hydromer-mist"] .media img {
+      transform: scale(.93);
+    }
+  }
+
+  @media (min-width: 750px) and (max-width: 767px) {
+    #main-collection-product-grid {
+      --collection-grid-gutter: 1rem;
+    }
+  }
+
+  @media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+    #CollectionProductGrid .card-wrapper .media picture img {
+      transition: scale .3s ease-out;
+    }
+
+    #CollectionProductGrid .card-wrapper:hover .media picture img {
+      scale: 1.025;
+    }
+  }
+</style>
 </head>
   
   <body class="gradient template-collection template-collection ">
@@ -1932,25 +2009,21 @@ window.ShopifyPay.apiHost = "shop.app\/pay";</script>
             
               <li class="grid__item" data-handle="the-youth-script">
                 <div class="card-wrapper">
-                  <a href="../products/the-youth-script.html" class="full-unstyled-link">
-                    <span class="visually-hidden">The Youth Script</span>
-                
                     <div class="card card--product">
                       <div class="card__inner">
-                        <a href="../products/the-youth-script.html" class="image-product-link"></a>
-                        <div>
+                        <a href="../products/the-youth-script.html" class="image-product-link">
                           <div class="media media--transparent media--adapt media--hover-effect" style="padding-bottom: 100.0%;">
-                              <picture><source type="image/avif" srcset="../cdn/shop/files/The_youth_script_750x.png.avif"><source type="image/webp" srcset="../cdn/shop/files/The_youth_script_750x.png.webp"><img decoding="async" src="../cdn/shop/files/The_youth_script_750x.png" loading="lazy" class="motion-reduce"></picture>
+                              <picture><source type="image/avif" srcset="../cdn/shop/files/The_youth_script_750x.png.avif"><source type="image/webp" srcset="../cdn/shop/files/The_youth_script_750x.png.webp"><img decoding="async" src="../cdn/shop/files/The_youth_script_750x.png" alt="The Youth Script" loading="lazy" class="motion-reduce"></picture>
                           </div>
-                        </div>
+                        </a>
                       </div>
                     </div>
                 
                     <div class="card-information">
                       <div class="card-information__wrapper">
-                          <span class="card-information__text h5">
+                          <a href="../products/the-youth-script.html"><span class="card-information__text h5">
                               The Youth Script
-                          </span>
+                          </span></a>
                           <span class="card-information__subtext">
                               
                           </span>
@@ -1988,7 +2061,6 @@ window.ShopifyPay.apiHost = "shop.app\/pay";</script>
                           
                       </div>
                     </div>
-                  </a>
                 </div>
               </li>
             
@@ -1997,25 +2069,21 @@ window.ShopifyPay.apiHost = "shop.app\/pay";</script>
             
               <li class="grid__item" data-handle="the-breakouts-script">
                 <div class="card-wrapper">
-                  <a href="../products/the-breakouts-script.html" class="full-unstyled-link">
-                    <span class="visually-hidden">The Breakouts Script</span>
-                
                     <div class="card card--product">
                       <div class="card__inner">
-                        <a href="../products/the-breakouts-script.html" class="image-product-link"></a>
-                        <div>
+                        <a href="../products/the-breakouts-script.html" class="image-product-link">
                           <div class="media media--transparent media--adapt media--hover-effect" style="padding-bottom: 100.0%;">
-                              <picture><source type="image/avif" srcset="../cdn/shop/files/The_breakouts_script_750x.png.avif"><source type="image/webp" srcset="../cdn/shop/files/The_breakouts_script_750x.png.webp"><img decoding="async" src="../cdn/shop/files/The_breakouts_script_750x.png" loading="lazy" class="motion-reduce"></picture>
+                              <picture><source type="image/avif" srcset="../cdn/shop/files/The_breakouts_script_750x.png.avif"><source type="image/webp" srcset="../cdn/shop/files/The_breakouts_script_750x.png.webp"><img decoding="async" src="../cdn/shop/files/The_breakouts_script_750x.png" alt="The Breakouts Script" loading="lazy" class="motion-reduce"></picture>
                           </div>
-                        </div>
+                        </a>
                       </div>
                     </div>
                 
                     <div class="card-information">
                       <div class="card-information__wrapper">
-                          <span class="card-information__text h5">
+                          <a href="../products/the-breakouts-script.html"><span class="card-information__text h5">
                               The Breakouts Script
-                          </span>
+                          </span></a>
                           <span class="card-information__subtext">
                               
                           </span>
@@ -2053,7 +2121,6 @@ window.ShopifyPay.apiHost = "shop.app\/pay";</script>
                           
                       </div>
                     </div>
-                  </a>
                 </div>
               </li>
             
@@ -2062,25 +2129,21 @@ window.ShopifyPay.apiHost = "shop.app\/pay";</script>
             
               <li class="grid__item" data-handle="complexion-script">
                 <div class="card-wrapper">
-                  <a href="../products/complexion-script.html" class="full-unstyled-link">
-                    <span class="visually-hidden">The Complexion Script</span>
-                
                     <div class="card card--product">
                       <div class="card__inner">
-                        <a href="../products/complexion-script.html" class="image-product-link"></a>
-                        <div>
+                        <a href="../products/complexion-script.html" class="image-product-link">
                           <div class="media media--transparent media--adapt media--hover-effect" style="padding-bottom: 100.0%;">
-                              <picture><source type="image/avif" srcset="../cdn/shop/files/The_complexion_script_750x.png.avif"><source type="image/webp" srcset="../cdn/shop/files/The_complexion_script_750x.png.webp"><img decoding="async" src="../cdn/shop/files/The_complexion_script_750x.png" loading="lazy" class="motion-reduce"></picture>
+                              <picture><source type="image/avif" srcset="../cdn/shop/files/The_complexion_script_750x.png.avif"><source type="image/webp" srcset="../cdn/shop/files/The_complexion_script_750x.png.webp"><img decoding="async" src="../cdn/shop/files/The_complexion_script_750x.png" alt="The Complexion Script" loading="lazy" class="motion-reduce"></picture>
                           </div>
-                        </div>
+                        </a>
                       </div>
                     </div>
                 
                     <div class="card-information">
                       <div class="card-information__wrapper">
-                          <span class="card-information__text h5">
+                          <a href="../products/complexion-script.html"><span class="card-information__text h5">
                               The Complexion Script
-                          </span>
+                          </span></a>
                           <span class="card-information__subtext">
                               
                           </span>
@@ -2118,7 +2181,6 @@ window.ShopifyPay.apiHost = "shop.app\/pay";</script>
                           
                       </div>
                     </div>
-                  </a>
                 </div>
               </li>
             
@@ -2135,11 +2197,9 @@ window.ShopifyPay.apiHost = "shop.app\/pay";</script>
 
 <div class="card-wrapper hydromer-mist">
   <!-- 4 class="full-unstyled-link"> -->
-    <span class="visually-hidden">Hydromer Mist</span>
 
     <div class="card card--product" tabindex="-1">
-      <div class="card__inner"><a href="../products/hydromer-mist.html" class="image-product-link"></a>
-          <div>
+      <div class="card__inner"><a href="../products/hydromer-mist.html" class="image-product-link">
             <div class="media media--transparent media--adapt media--hover-effect"
                style="padding-bottom: 100.0%;"
             >
@@ -2156,7 +2216,7 @@ window.ShopifyPay.apiHost = "shop.app\/pay";</script>
               ></picture>
             </div>
           
-          </div><div class="card__badge"></div>
+          </a><div class="card__badge"></div>
       </div>
     </div>
 
@@ -2235,11 +2295,9 @@ window.ShopifyPay.apiHost = "shop.app\/pay";</script>
 
 <div class="card-wrapper preparationb5">
   <!-- 4 class="full-unstyled-link"> -->
-    <span class="visually-hidden">Preparation B₅</span>
 
     <div class="card card--product" tabindex="-1">
-      <div class="card__inner"><a href="../products/preparationb5.html" class="image-product-link"></a>
-          <div>
+      <div class="card__inner"><a href="../products/preparationb5.html" class="image-product-link">
             <div class="media media--transparent media--adapt media--hover-effect"
                style="padding-bottom: 100.0%;"
             >
@@ -2248,7 +2306,7 @@ window.ShopifyPay.apiHost = "shop.app\/pay";</script>
                 
                 src="../cdn/shop/files/Mask_group-2_1000x.png"
              	
-                alt="50ml 1.7 fl. oz"
+                alt="Preparation B₅"
                 loading="lazy"
                 class="motion-reduce"
                 width="1080"
@@ -2256,7 +2314,7 @@ window.ShopifyPay.apiHost = "shop.app\/pay";</script>
               ></picture>
             </div>
           
-          </div><div class="card__badge"></div>
+          </a><div class="card__badge"></div>
       </div>
     </div>
 
@@ -2335,11 +2393,9 @@ window.ShopifyPay.apiHost = "shop.app\/pay";</script>
 
 <div class="card-wrapper gel">
   <!-- 4 class="full-unstyled-link"> -->
-    <span class="visually-hidden">Gel</span>
 
     <div class="card card--product" tabindex="-1">
-      <div class="card__inner"><a href="../products/gel.html" class="image-product-link"></a>
-          <div>
+      <div class="card__inner"><a href="../products/gel.html" class="image-product-link">
             <div class="media media--transparent media--adapt media--hover-effect"
                style="padding-bottom: 100.0%;"
             >
@@ -2348,7 +2404,7 @@ window.ShopifyPay.apiHost = "shop.app\/pay";</script>
                 
                 src="../cdn/shop/files/Mask_group-4_1000x.png"
              	
-                alt="340ml 11.5 fl. oz."
+                alt="Gel"
                 loading="lazy"
                 class="motion-reduce"
                 width="1080"
@@ -2356,7 +2412,7 @@ window.ShopifyPay.apiHost = "shop.app\/pay";</script>
               ></picture>
             </div>
           
-          </div><div class="card__badge"></div>
+          </a><div class="card__badge"></div>
       </div>
     </div>
 
@@ -2435,11 +2491,9 @@ window.ShopifyPay.apiHost = "shop.app\/pay";</script>
 
 <div class="card-wrapper hydromer">
   <!-- 4 class="full-unstyled-link"> -->
-    <span class="visually-hidden">Hydromer</span>
 
     <div class="card card--product" tabindex="-1">
-      <div class="card__inner"><a href="../products/hydromer.html" class="image-product-link"></a>
-          <div>
+      <div class="card__inner"><a href="../products/hydromer.html" class="image-product-link">
             <div class="media media--transparent media--adapt media--hover-effect"
                style="padding-bottom: 100.0%;"
             >
@@ -2448,7 +2502,7 @@ window.ShopifyPay.apiHost = "shop.app\/pay";</script>
                 
                 src="../cdn/shop/files/Mask_group-1_1000x.png"
              	
-                alt="30ml 1.01 fl.oz"
+                alt="Hydromer"
                 loading="lazy"
                 class="motion-reduce"
                 width="1080"
@@ -2456,7 +2510,7 @@ window.ShopifyPay.apiHost = "shop.app\/pay";</script>
               ></picture>
             </div>
           
-          </div><div class="card__badge"></div>
+          </a><div class="card__badge"></div>
       </div>
     </div>
 
@@ -2535,11 +2589,9 @@ window.ShopifyPay.apiHost = "shop.app\/pay";</script>
 
 <div class="card-wrapper decalt">
   <!-- 4 class="full-unstyled-link"> -->
-    <span class="visually-hidden">Decalt</span>
 
     <div class="card card--product" tabindex="-1">
-      <div class="card__inner"><a href="../products/decalt.html" class="image-product-link"></a>
-          <div>
+      <div class="card__inner"><a href="../products/decalt.html" class="image-product-link">
             <div class="media media--transparent media--adapt media--hover-effect"
                style="padding-bottom: 100.0%;"
             >
@@ -2548,7 +2600,7 @@ window.ShopifyPay.apiHost = "shop.app\/pay";</script>
                 
                 src="../cdn/shop/files/Mask_group-5_1000x.png"
              	
-                alt="150ml 5.07 fl. oz."
+                alt="Decalt"
                 loading="lazy"
                 class="motion-reduce"
                 width="1080"
@@ -2556,7 +2608,7 @@ window.ShopifyPay.apiHost = "shop.app\/pay";</script>
               ></picture>
             </div>
           
-          </div><div class="card__badge"></div>
+          </a><div class="card__badge"></div>
       </div>
     </div>
 
@@ -2635,11 +2687,9 @@ window.ShopifyPay.apiHost = "shop.app\/pay";</script>
 
 <div class="card-wrapper hyaluid">
   <!-- 4 class="full-unstyled-link"> -->
-    <span class="visually-hidden">Hyaluid</span>
 
     <div class="card card--product" tabindex="-1">
-      <div class="card__inner"><a href="../products/hyaluid.html" class="image-product-link"></a>
-          <div>
+      <div class="card__inner"><a href="../products/hyaluid.html" class="image-product-link">
             <div class="media media--transparent media--adapt media--hover-effect"
                style="padding-bottom: 100.0%;"
             >
@@ -2648,7 +2698,7 @@ window.ShopifyPay.apiHost = "shop.app\/pay";</script>
                 
                 src="../cdn/shop/files/hyaluid_mockup_13bf75e9-98f6-4d64-a364-8280d165d484_1000x.png"
              	
-                alt="100ml 3.38 fl. oz."
+                alt="Hyaluid"
                 loading="lazy"
                 class="motion-reduce"
                 width="1080"
@@ -2656,7 +2706,7 @@ window.ShopifyPay.apiHost = "shop.app\/pay";</script>
               ></picture>
             </div>
           
-          </div><div class="card__badge"></div>
+          </a><div class="card__badge"></div>
       </div>
     </div>
 
@@ -2735,11 +2785,9 @@ window.ShopifyPay.apiHost = "shop.app\/pay";</script>
 
 <div class="card-wrapper niacid">
   <!-- 4 class="full-unstyled-link"> -->
-    <span class="visually-hidden">Niacid</span>
 
     <div class="card card--product" tabindex="-1">
-      <div class="card__inner"><a href="../products/niacid.html" class="image-product-link"></a>
-          <div>
+      <div class="card__inner"><a href="../products/niacid.html" class="image-product-link">
             <div class="media media--transparent media--adapt media--hover-effect"
                style="padding-bottom: 100.0%;"
             >
@@ -2748,7 +2796,7 @@ window.ShopifyPay.apiHost = "shop.app\/pay";</script>
                 
                 src="../cdn/shop/files/niacid_mockup_6b7843a4-4537-4ad5-9731-74a3fa8ce517_1000x.png"
              	
-                alt="50ml 1.7 fl. oz"
+                alt="Niacid"
                 loading="lazy"
                 class="motion-reduce"
                 width="1080"
@@ -2756,7 +2804,7 @@ window.ShopifyPay.apiHost = "shop.app\/pay";</script>
               ></picture>
             </div>
           
-          </div><div class="card__badge"></div>
+          </a><div class="card__badge"></div>
       </div>
     </div>
 

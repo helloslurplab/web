@@ -45,8 +45,9 @@ a{color:inherit;text-decoration:none}
 .hero{position:relative;height:100vh;height:100svh;min-height:560px;background:var(--bg-2)}
 .hero-track{display:flex;gap:2px;height:100%;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:none}
 .hero-track::-webkit-scrollbar{display:none}
-.hero-panel{position:relative;flex:0 0 84%;scroll-snap-align:center;overflow:hidden;background:var(--bg-2);opacity:0;transform:translateX(-7%)}
-@keyframes panel-fade{to{opacity:1;transform:translateX(0)}}
+.hero-track.is-auto-scrolling{scroll-snap-type:none}
+.hero-panel{position:relative;flex:0 0 84%;scroll-snap-align:center;overflow:hidden;background:var(--bg-2);opacity:0}
+@keyframes panel-fade{to{opacity:1}}
 @keyframes panel-in{to{clip-path:inset(0 0 0 0)}}
 /* IO-driven reveal is mobile-only; desktop uses timed CSS animations.
    Unscoped, .in would override the desktop panel-in wipe and re-hide the panels. */
@@ -102,8 +103,9 @@ a{color:inherit;text-decoration:none}
 .formula-grid{display:grid;grid-template-columns:1fr;gap:56px}
 .formula{opacity:0;transform:translateY(30px);transition:opacity .9s var(--ease-out),transform .9s var(--ease-out)}
 .formula.in{opacity:1;transform:translateY(0)}
-.formula .frame{position:relative;aspect-ratio:4/5;background:var(--bg-2);overflow:hidden}
+.formula .frame{display:block;position:relative;aspect-ratio:4/5;background:var(--bg-2);overflow:hidden}
 .formula .frame img{width:100%;height:100%;object-fit:cover;transition:transform 1.2s var(--ease-out)}
+.formula--youth .frame img{object-fit:contain}
 .formula:hover .frame img{transform:scale(1.05)}
 .formula .num{position:absolute;top:14px;left:16px;font-size:9px;letter-spacing:.28em;color:var(--ink-30)}
 .formula h3{margin-top:22px;font-size:20px;font-weight:500;letter-spacing:-.01em}
@@ -111,6 +113,8 @@ a{color:inherit;text-decoration:none}
 .formula p{margin-top:12px;font-size:13.5px;font-weight:300;line-height:1.7;color:var(--ink-60);max-width:36ch}
 .formula .discover{display:inline-flex;align-items:center;gap:10px;margin-top:18px;font-size:10px;letter-spacing:.26em;text-transform:uppercase;padding-bottom:6px;border-bottom:1px solid var(--ink-30);transition:border-color .3s,gap .3s var(--ease)}
 .formula .discover:hover{border-color:var(--ink);gap:16px}
+.hero-panel:focus-visible,.formula .frame:focus-visible{outline:2px solid currentColor;outline-offset:-4px}
+.hero-panel:focus-visible{outline-color:#fff}
 
 /* ============ RITUAL (mobile-first: stacked rows) ============ */
 .ritual{background:var(--bg-2);padding:100px 22px}
@@ -138,6 +142,12 @@ footer{background:#3E4347;color:rgba(250,250,250,.55);padding:28px 24px;display:
 footer .socials{display:flex;flex-wrap:wrap;justify-content:center;gap:14px 22px}
 footer a{transition:color .3s}
 footer a:hover{color:var(--white)}
+
+@media (max-width:899px){
+  .hero-title{padding-inline:16px}
+  .hero-title h1 span{display:block}
+  .film-sticky video{object-position:76% center}
+}
 
 /* ============================================================
    DESKTOP ≥ 900px — the variant you liked, preserved
@@ -222,7 +232,7 @@ footer a:hover{color:var(--white)}
   .hero-panel,.hero-panel video,.hero-panel .panel-label,.hero-title{animation:none;clip-path:none;opacity:1;transform:none}
   .manifesto .w{opacity:1;transition:none}
   .formula,.ritual-row{opacity:1;transform:none;transition:none}
-  .film-word{transition:none}
+  .film-word.on{transition:none}
   .scroll-cue .line::after{animation:none}
 }
 </style>
@@ -239,24 +249,24 @@ footer a:hover{color:var(--white)}
 
 <section class="hero" aria-label="The Concern Scripts">
   <div class="hero-track">
-    <div class="hero-panel">
+    <a class="hero-panel" href="products/the-youth-script.html">
       <video src="cdn/shop/videos/c/vp/597150cbac16497b8bca25d5b8c1caed/597150cbac16497b8bca25d5b8c1caed.HD-1080p-7.2Mbps-30884455.mp4" poster="cdn/shop/files/preview_images/597150cbac16497b8bca25d5b8c1caed.thumbnail.0000000000_700x.jpg" autoplay muted loop playsinline preload="auto"></video>
       <div class="veil"></div>
-      <div class="panel-label"><span class="idx">01</span><span class="name">The Youth Script</span></div>
-    </div>
-    <div class="hero-panel">
+      <div class="panel-label"><span class="idx" aria-hidden="true">01</span><span class="name">The Youth Script</span></div>
+    </a>
+    <a class="hero-panel" href="products/hyaluid.html">
       <video src="cdn/shop/videos/c/vp/a57b4d1e845f4270ae03fb1bbeb7e302/a57b4d1e845f4270ae03fb1bbeb7e302.HD-1080p-7.2Mbps-27393352.mp4" poster="cdn/shop/files/preview_images/a57b4d1e845f4270ae03fb1bbeb7e302.thumbnail.0000000000_700x.jpg" autoplay muted loop playsinline preload="auto"></video>
       <div class="veil"></div>
-      <div class="panel-label"><span class="idx">02</span><span class="name">Hyaluid</span></div>
-    </div>
-    <div class="hero-panel">
+      <div class="panel-label"><span class="idx" aria-hidden="true">02</span><span class="name">Hyaluid</span></div>
+    </a>
+    <a class="hero-panel" href="products/decalt.html">
       <video src="cdn/shop/videos/c/vp/e6161cffc7ba41b2a33ac6a38baae142/e6161cffc7ba41b2a33ac6a38baae142.HD-1080p-7.2Mbps-27393350.mp4" poster="cdn/shop/files/preview_images/e6161cffc7ba41b2a33ac6a38baae142.thumbnail.0000000000_500x.jpg" autoplay muted loop playsinline preload="auto"></video>
       <div class="veil"></div>
-      <div class="panel-label"><span class="idx">03</span><span class="name">Decalt</span></div>
-    </div>
+      <div class="panel-label"><span class="idx" aria-hidden="true">03</span><span class="name">Decalt</span></div>
+    </a>
   </div>
   <div class="hero-title">
-    <h1>The Concern Scripts</h1>
+    <h1><span>The Concern</span> Scripts</h1>
     <p>Three formulas &middot; Three concerns &middot; One script</p>
     <div class="scroll-cue"><span>Scroll</span><span class="line"></span></div>
   </div>
@@ -293,43 +303,43 @@ footer a:hover{color:var(--white)}
     <span class="count">03 / Featured</span>
   </div>
   <div class="formula-grid">
-    <article class="formula">
-      <div class="frame">
-        <span class="num">01</span>
+    <article class="formula formula--youth">
+      <a class="frame" href="products/the-youth-script.html">
+        <span class="num" aria-hidden="true">01</span>
         <picture>
           <source type="image/avif" srcset="cdn/shop/files/The_youth_script_750x.png.avif">
           <source type="image/webp" srcset="cdn/shop/files/The_youth_script_750x.png.webp">
           <img src="cdn/shop/files/The_youth_script_750x.png" alt="The Youth Script" loading="lazy" decoding="async">
         </picture>
-      </div>
+      </a>
       <h3>The Youth Script</h3>
       <span class="descriptor">3-Formula Set</span>
       <p>A set of 3 formulas curated to improve and maintain the appearance of younger looking skin.</p>
       <a class="discover" href="products/the-youth-script.html">Discover <span aria-hidden="true">&rarr;</span></a>
     </article>
     <article class="formula">
-      <div class="frame">
-        <span class="num">02</span>
+      <a class="frame" href="products/hyaluid.html">
+        <span class="num" aria-hidden="true">02</span>
         <picture>
           <source type="image/avif" srcset="cdn/shop/files/Hyaluid_Bottle_100ml_7c3be87a-6b6f-485f-80d2-8ce7c8a28430_750x.png.avif">
           <source type="image/webp" srcset="cdn/shop/files/Hyaluid_Bottle_100ml_7c3be87a-6b6f-485f-80d2-8ce7c8a28430_750x.png.webp">
           <img src="cdn/shop/files/Hyaluid_Bottle_100ml_7c3be87a-6b6f-485f-80d2-8ce7c8a28430_750x.png" alt="Hyaluid" loading="lazy" decoding="async">
         </picture>
-      </div>
+      </a>
       <h3>Hyaluid</h3>
       <span class="descriptor">Longevity Fluid</span>
       <p>A topical supplement developed to support functions and refill molecules that have declined with age.</p>
       <a class="discover" href="products/hyaluid.html">Discover <span aria-hidden="true">&rarr;</span></a>
     </article>
     <article class="formula">
-      <div class="frame">
-        <span class="num">03</span>
+      <a class="frame" href="products/decalt.html">
+        <span class="num" aria-hidden="true">03</span>
         <picture>
           <source type="image/avif" srcset="cdn/shop/files/Decalt_Bottle_750x.png.avif">
           <source type="image/webp" srcset="cdn/shop/files/Decalt_Bottle_750x.png.webp">
           <img src="cdn/shop/files/Decalt_Bottle_750x.png" alt="Decalt" loading="lazy" decoding="async">
         </picture>
-      </div>
+      </a>
       <h3>Decalt</h3>
       <span class="descriptor">Liquid Cr&ecirc;me Exfoliant</span>
       <p>A gentle acidic decongestant developed to resolve chronic concerns &mdash; blackheads, whiteheads, pimples and bumps.</p>
@@ -384,7 +394,8 @@ footer a:hover{color:var(--white)}
 
 <script>
 (function(){
-  var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var motionPreference = matchMedia('(prefers-reduced-motion: reduce)');
+  var reduce = motionPreference.matches;
   var desktop = matchMedia('(min-width: 900px)');
 
   /* ---- Reveal on scroll (cards, rows) ---- */
@@ -435,23 +446,18 @@ footer a:hover{color:var(--white)}
   var filmVideo = document.getElementById('filmVideo');
   var fwords = document.querySelectorAll('.film-word');
   var fdots = document.querySelectorAll('.film-progress i');
-  if(!reduce){
-    var ftick = false;
-    function fupdate(){
-      ftick = false;
-      var r = film.getBoundingClientRect();
-      var total = r.height - innerHeight;
-      var p = Math.min(1, Math.max(0, -r.top / total));
-      var idx = p < .33 ? 0 : p < .66 ? 1 : 2;
-      fwords.forEach(function(w,i){ w.classList.toggle('on', i === idx); });
-      fdots.forEach(function(d,i){ d.classList.toggle('on', i <= idx); });
-    }
-    addEventListener('scroll', function(){ if(!ftick){ ftick = true; requestAnimationFrame(fupdate);} }, {passive:true});
-    fupdate();
-  } else {
-    fwords.forEach(function(w){ w.classList.add('on'); });
-    fdots.forEach(function(d){ d.classList.add('on'); });
+  var ftick = false;
+  function fupdate(){
+    ftick = false;
+    var r = film.getBoundingClientRect();
+    var total = r.height - innerHeight;
+    var p = Math.min(1, Math.max(0, -r.top / total));
+    var idx = p < .33 ? 0 : p < .66 ? 1 : 2;
+    fwords.forEach(function(w,i){ w.classList.toggle('on', i === idx); });
+    fdots.forEach(function(d,i){ d.classList.toggle('on', i <= idx); });
   }
+  addEventListener('scroll', function(){ if(!ftick){ ftick = true; requestAnimationFrame(fupdate);} }, {passive:true});
+  fupdate();
   if(filmVideo){
     var vio = new IntersectionObserver(function(es){
       es.forEach(function(e){
@@ -465,13 +471,71 @@ footer a:hover{color:var(--white)}
   /* ---- Hero videos: pause when hero is out of view ---- */
   var hero = document.querySelector('.hero');
   if(hero){
+    var track = hero.querySelector('.hero-track');
+    var panels = Array.from(track.children);
+    var heroVisible = false;
+    var manualScroll = false;
+    var autoScrollTimer;
+    var autoScrollFrame;
+
+    function animateHeroScroll(left, duration){
+      var from = track.scrollLeft;
+      var start = performance.now();
+      track.classList.add('is-auto-scrolling');
+
+      function step(now){
+        var progress = Math.min(1, (now - start) / duration);
+        var eased = (1 - Math.cos(Math.PI * progress)) / 2;
+        track.scrollLeft = from + (left - from) * eased;
+        if(progress < 1){
+          autoScrollFrame = requestAnimationFrame(step);
+        } else {
+          track.classList.remove('is-auto-scrolling');
+        }
+      }
+
+      autoScrollFrame = requestAnimationFrame(step);
+    }
+
+    function scheduleAutoScroll(){
+      clearTimeout(autoScrollTimer);
+      if(!heroVisible || document.hidden || desktop.matches || motionPreference.matches || manualScroll || track.scrollWidth <= track.clientWidth){
+        cancelAnimationFrame(autoScrollFrame);
+        track.classList.remove('is-auto-scrolling');
+        return;
+      }
+
+      autoScrollTimer = setTimeout(function(){
+        var maxScroll = track.scrollWidth - track.clientWidth;
+        var next = panels.map(function(panel){
+          var center = panel.offsetLeft - panels[0].offsetLeft + panel.offsetWidth / 2;
+          return Math.min(maxScroll, Math.max(0, center - track.clientWidth / 2));
+        }).find(function(left){ return left > track.scrollLeft + 1; });
+        animateHeroScroll(next ?? 0, next === undefined ? 850 : 650);
+        scheduleAutoScroll();
+      }, 1500);
+    }
+
+    ['pointerdown', 'wheel', 'keydown'].forEach(function(event){
+      track.addEventListener(event, function(){
+        if(desktop.matches) return;
+        manualScroll = true;
+        scheduleAutoScroll();
+      }, {passive:true});
+    });
+    desktop.addEventListener('change', scheduleAutoScroll);
+    motionPreference.addEventListener('change', scheduleAutoScroll);
+    document.addEventListener('visibilitychange', scheduleAutoScroll);
+
     var hio = new IntersectionObserver(function(es){
       es.forEach(function(e){
         hero.querySelectorAll('video').forEach(function(v){
-          if(e.isIntersecting && !reduce){ v.play().catch(function(){}); } else { v.pause(); }
+          if(e.intersectionRatio >= .05 && !reduce){ v.play().catch(function(){}); } else { v.pause(); }
         });
+        heroVisible = e.intersectionRatio >= .5;
+        scheduleAutoScroll();
       });
-    },{threshold:.05});
+    },{threshold:[.05,.5]});
     hio.observe(hero);
   }
 })();
