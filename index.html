@@ -254,17 +254,26 @@ footer a:hover{color:var(--white)}
 <section class="hero" aria-label="The Concern Scripts">
   <div class="hero-track">
     <a class="hero-panel" href="products/the-youth-script.html">
-      <video src="cdn/shop/videos/c/vp/597150cbac16497b8bca25d5b8c1caed/597150cbac16497b8bca25d5b8c1caed.HD-1080p-7.2Mbps-30884455.mp4" poster="cdn/shop/files/preview_images/597150cbac16497b8bca25d5b8c1caed.thumbnail.0000000000_700x.jpg" autoplay muted loop playsinline preload="auto"></video>
+      <video poster="cdn/shop/files/preview_images/597150cbac16497b8bca25d5b8c1caed.thumbnail.0000000000_700x.jpg" muted loop playsinline preload="auto">
+        <source src="cdn/shop/videos/c/vp/597150cbac16497b8bca25d5b8c1caed/hero-mobile.mp4" type="video/mp4" media="(width < 900px)">
+        <source src="cdn/shop/videos/c/vp/597150cbac16497b8bca25d5b8c1caed/597150cbac16497b8bca25d5b8c1caed.HD-1080p-7.2Mbps-30884455.mp4" type="video/mp4">
+      </video>
       <div class="veil"></div>
       <div class="panel-label"><span class="idx" aria-hidden="true">01</span><span class="name">The Youth Script</span></div>
     </a>
     <a class="hero-panel" href="products/hyaluid.html">
-      <video src="cdn/shop/videos/c/vp/a57b4d1e845f4270ae03fb1bbeb7e302/a57b4d1e845f4270ae03fb1bbeb7e302.HD-1080p-7.2Mbps-27393352.mp4" poster="cdn/shop/files/preview_images/a57b4d1e845f4270ae03fb1bbeb7e302.thumbnail.0000000000_700x.jpg" autoplay muted loop playsinline preload="auto"></video>
+      <video poster="cdn/shop/files/preview_images/a57b4d1e845f4270ae03fb1bbeb7e302.thumbnail.0000000000_700x.jpg" muted loop playsinline preload="none">
+        <source src="cdn/shop/videos/c/vp/a57b4d1e845f4270ae03fb1bbeb7e302/hero-mobile.mp4" type="video/mp4" media="(width < 900px)">
+        <source src="cdn/shop/videos/c/vp/a57b4d1e845f4270ae03fb1bbeb7e302/a57b4d1e845f4270ae03fb1bbeb7e302.HD-1080p-7.2Mbps-27393352.mp4" type="video/mp4">
+      </video>
       <div class="veil"></div>
       <div class="panel-label"><span class="idx" aria-hidden="true">02</span><span class="name">Hyaluid</span></div>
     </a>
     <a class="hero-panel" href="products/decalt.html">
-      <video src="cdn/shop/videos/c/vp/e6161cffc7ba41b2a33ac6a38baae142/e6161cffc7ba41b2a33ac6a38baae142.HD-1080p-7.2Mbps-27393350.mp4" poster="cdn/shop/files/preview_images/e6161cffc7ba41b2a33ac6a38baae142.thumbnail.0000000000_500x.jpg" autoplay muted loop playsinline preload="auto"></video>
+      <video poster="cdn/shop/files/preview_images/e6161cffc7ba41b2a33ac6a38baae142.thumbnail.0000000000_500x.jpg" muted loop playsinline preload="none">
+        <source src="cdn/shop/videos/c/vp/e6161cffc7ba41b2a33ac6a38baae142/hero-mobile.mp4" type="video/mp4" media="(width < 900px)">
+        <source src="cdn/shop/videos/c/vp/e6161cffc7ba41b2a33ac6a38baae142/e6161cffc7ba41b2a33ac6a38baae142.HD-1080p-7.2Mbps-27393350.mp4" type="video/mp4">
+      </video>
       <div class="veil"></div>
       <div class="panel-label"><span class="idx" aria-hidden="true">03</span><span class="name">Decalt</span></div>
     </a>
@@ -289,7 +298,7 @@ footer a:hover{color:var(--white)}
 <!-- ================= FILM ================= -->
 <section class="film" aria-label="The ritual">
   <div class="film-sticky">
-    <video id="filmVideo" src="cdn/shop/videos/c/vp/a47f974ab42f4286b052bff1dc6ccd52/a47f974ab42f4286b052bff1dc6ccd52.HD-1080p-7.2Mbps-27230970.mp4" poster="cdn/shop/files/preview_images/a47f974ab42f4286b052bff1dc6ccd52.thumbnail.0000000000_2048x.jpg" autoplay muted loop playsinline preload="metadata"></video>
+    <video id="filmVideo" src="cdn/shop/videos/c/vp/a47f974ab42f4286b052bff1dc6ccd52/a47f974ab42f4286b052bff1dc6ccd52.HD-1080p-7.2Mbps-27230970.mp4" poster="cdn/shop/files/preview_images/a47f974ab42f4286b052bff1dc6ccd52.thumbnail.0000000000_2048x.jpg" muted loop playsinline preload="none"></video>
     <div class="veil"></div>
     <div class="film-words">
       <div class="film-word" data-word="0">Cleanse.<small>Gel &middot; Double Cleanser</small></div>
@@ -463,6 +472,12 @@ footer a:hover{color:var(--white)}
   addEventListener('scroll', function(){ if(!ftick){ ftick = true; requestAnimationFrame(fupdate);} }, {passive:true});
   fupdate();
   if(filmVideo){
+    function configureFilmVideo(){
+      filmVideo.autoplay = desktop.matches;
+      filmVideo.preload = desktop.matches ? 'metadata' : 'none';
+    }
+    configureFilmVideo();
+    desktop.addEventListener('change', configureFilmVideo);
     var vio = new IntersectionObserver(function(es){
       es.forEach(function(e){
         if(e.isIntersecting && !reduce){ filmVideo.play().catch(function(){}); }
@@ -477,10 +492,21 @@ footer a:hover{color:var(--white)}
   if(hero){
     var track = hero.querySelector('.hero-track');
     var panels = Array.from(track.children);
+    var heroVideos = hero.querySelectorAll('video');
+    var visiblePanels = new Set();
+    var heroInView = false;
     var heroVisible = false;
     var manualScroll = false;
     var autoScrollTimer;
     var autoScrollFrame;
+
+    function configureHeroVideos(){
+      heroVideos.forEach(function(video, index){
+        video.autoplay = desktop.matches;
+        video.preload = desktop.matches || index === 0 ? 'auto' : 'none';
+      });
+    }
+    configureHeroVideos();
 
     function animateHeroScroll(left, duration){
       var from = track.scrollLeft;
@@ -501,6 +527,17 @@ footer a:hover{color:var(--white)}
       autoScrollFrame = requestAnimationFrame(step);
     }
 
+    function hasBufferedPlayback(video){
+      if(video.error || video.networkState === HTMLMediaElement.NETWORK_NO_SOURCE) return true;
+      if(video.networkState === HTMLMediaElement.NETWORK_IDLE && video.readyState >= HTMLMediaElement.HAVE_FUTURE_DATA) return true;
+      var time = video.currentTime;
+      var end = Math.min(video.duration, time + 2.1);
+      for(var i = 0; i < video.buffered.length; i++){
+        if(video.buffered.start(i) <= time && video.buffered.end(i) >= end) return true;
+      }
+      return false;
+    }
+
     function scheduleAutoScroll(){
       clearTimeout(autoScrollTimer);
       if(!heroVisible || document.hidden || desktop.matches || motionPreference.matches || manualScroll || track.scrollWidth <= track.clientWidth){
@@ -511,11 +548,15 @@ footer a:hover{color:var(--white)}
 
       autoScrollTimer = setTimeout(function(){
         var maxScroll = track.scrollWidth - track.clientWidth;
-        var next = panels.map(function(panel){
+        var stops = panels.map(function(panel){
           var center = panel.offsetLeft - panels[0].offsetLeft + panel.offsetWidth / 2;
           return Math.min(maxScroll, Math.max(0, center - track.clientWidth / 2));
-        }).find(function(left){ return left > track.scrollLeft + 1; });
-        animateHeroScroll(next ?? 0, next === undefined ? 850 : 650);
+        });
+        var next = stops.findIndex(function(left){ return left > track.scrollLeft + 1; });
+        var nextVideo = heroVideos[Math.max(0, next)];
+        if(hasBufferedPlayback(nextVideo)){
+          animateHeroScroll(stops[Math.max(0, next)], next < 0 ? 850 : 650);
+        }
         scheduleAutoScroll();
       }, 1500);
     }
@@ -527,17 +568,65 @@ footer a:hover{color:var(--white)}
         scheduleAutoScroll();
       }, {passive:true});
     });
-    desktop.addEventListener('change', scheduleAutoScroll);
-    motionPreference.addEventListener('change', scheduleAutoScroll);
-    document.addEventListener('visibilitychange', scheduleAutoScroll);
+    function preloadHeroVideo(video){
+      if(video.preload !== 'none') return;
+      video.preload = 'auto';
+      if(video.networkState === HTMLMediaElement.NETWORK_IDLE) video.load();
+    }
+
+    function updateHeroPlayback(){
+      var canPlay = heroInView && !motionPreference.matches && (desktop.matches || !document.hidden);
+      heroVideos.forEach(function(video, index){
+        if(canPlay && (desktop.matches || visiblePanels.has(panels[index]))){
+          if(!desktop.matches) preloadHeroVideo(video);
+          if(video.paused && (desktop.matches || hasBufferedPlayback(video))) video.play().catch(function(){});
+        } else {
+          video.pause();
+        }
+      });
+    }
+
+    function updateHero(){
+      updateHeroPlayback();
+      scheduleAutoScroll();
+    }
+    desktop.addEventListener('change', function(){
+      configureHeroVideos();
+      heroVideos.forEach(function(video){ video.load(); });
+      updateHero();
+    });
+    motionPreference.addEventListener('change', updateHero);
+    document.addEventListener('visibilitychange', updateHero);
+
+    var panelObserver = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if(entry.intersectionRatio >= .35) visiblePanels.add(entry.target);
+        else visiblePanels.delete(entry.target);
+      });
+      if(!desktop.matches) updateHeroPlayback();
+    }, {root:track, threshold:.35});
+    panels.forEach(function(panel){ panelObserver.observe(panel); });
+
+    function preloadRemainingHeroVideos(){
+      if(desktop.matches) return;
+      for(var i = 1; i < heroVideos.length; i++){
+        preloadHeroVideo(heroVideos[i]);
+      }
+    }
+    heroVideos[0].addEventListener('playing', preloadRemainingHeroVideos);
+    heroVideos[0].addEventListener('error', preloadRemainingHeroVideos, {once:true});
+    heroVideos.forEach(function(video){
+      video.addEventListener('progress', updateHeroPlayback);
+      video.addEventListener('loadeddata', updateHeroPlayback);
+      video.addEventListener('canplaythrough', updateHeroPlayback);
+      video.addEventListener('suspend', updateHeroPlayback);
+    });
 
     var hio = new IntersectionObserver(function(es){
       es.forEach(function(e){
-        hero.querySelectorAll('video').forEach(function(v){
-          if(e.intersectionRatio >= .05 && !reduce){ v.play().catch(function(){}); } else { v.pause(); }
-        });
+        heroInView = e.intersectionRatio >= .05;
         heroVisible = e.intersectionRatio >= .5;
-        scheduleAutoScroll();
+        updateHero();
       });
     },{threshold:[.05,.5]});
     hio.observe(hero);
