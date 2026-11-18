@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cart — Slurp Laboratories</title>
+<link rel="icon" href="cdn/shop/files/Logo_3000_x_3000_32x32.png">
+<style>
+  @font-face{font-family:"Helvetica Now Text";src:url("cdn/shop/files/HelveticaNowText-Regular.woff2") format("woff2");font-display:swap}
+  @font-face{font-family:"Helvetica Now Text";src:url("cdn/shop/files/HelveticaNowText-Light.woff2") format("woff2");font-weight:300;font-display:swap}
+
+  :root{--ink:#3e4347;--page:#f7f7f7;--muted:#666c70}
+  *{box-sizing:border-box}
+  body{margin:0;min-height:100vh;min-height:100svh;display:flex;flex-direction:column;background:var(--page);color:var(--ink);font:15px "Helvetica Now Text",Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+  a{color:inherit;text-decoration:none}
+  button{color:inherit;font:inherit}
+  :focus-visible{outline:2px solid currentColor;outline-offset:4px}
+
+  .site-header{position:relative;display:grid;grid-template-columns:18% minmax(0,1fr) 35%;align-items:center;padding:14px 4vw;min-height:68px}
+  .brand{justify-self:start}
+  .brand img{display:block;width:74px;height:auto}
+  .primary-nav,.header-tools{display:flex;align-items:center}
+  .primary-nav{justify-content:space-between;gap:18px}
+  .header-tools{justify-content:flex-end;gap:clamp(22px,5vw,84px);padding-right:1.4vw}
+  .primary-nav a:hover,.cart-link:hover,.locale-menu a:hover{text-decoration:underline;text-underline-offset:4px}
+  .locale{position:relative}
+  .locale summary{display:flex;align-items:center;gap:10px;list-style:none;cursor:pointer}
+  .locale summary::-webkit-details-marker{display:none}
+  .locale summary::after,.newsletter-link::after{content:"";width:7px;height:7px;border-right:1px solid;border-bottom:1px solid;transform:rotate(45deg)}
+  .locale[open] summary::after{transform:rotate(225deg)}
+  .language summary span{text-decoration:underline;text-underline-offset:4px}
+  .locale-menu{position:absolute;z-index:2;top:calc(100% + 12px);right:0;min-width:130px;padding:8px 14px;display:grid;gap:8px;border:1px solid #d0d2d3;background:var(--page);white-space:nowrap}
+  .menu-toggle{display:none}
+
+  main{flex:1;display:grid;place-items:center;padding:40px 24px 82px;text-align:center}
+  .empty-cart{display:grid;justify-items:center;gap:23px}
+  h1{margin:0;font-size:clamp(32px,3vw,48px);font-weight:400;line-height:1.12;letter-spacing:-.035em}
+  .continue{display:inline-flex;align-items:center;justify-content:center;min-height:60px;min-width:288px;max-width:100%;padding:12px 28px;border:2px solid var(--ink);border-radius:999px;font-size:21px;line-height:1.2;letter-spacing:-.025em}
+  .continue:hover{background:var(--ink);color:var(--page)}
+
+  .site-footer{display:flex;justify-content:flex-end;align-items:center;gap:clamp(22px,4.1vw,66px);padding:26px 12vw 42px;color:var(--muted);font-weight:300}
+  .newsletter{display:flex;align-items:center;gap:30px}
+  .newsletter-link{display:flex;justify-content:space-between;align-items:center;gap:16px;width:clamp(130px,15.5vw,246px);min-height:36px;border-bottom:1px solid currentColor}
+  .newsletter-link::after{transform:rotate(-45deg)}
+  .socials{display:flex;align-items:center;gap:clamp(12px,1.6vw,26px)}
+  .socials a{display:grid;place-items:center;min-width:24px;min-height:36px}
+  .socials svg{display:block;width:22px;height:22px;fill:currentColor}
+  .site-footer small{font-size:inherit;white-space:nowrap}
+
+  @media (min-width:901px) and (max-width:1150px){
+    .site-footer{padding-inline:4vw}
+    .header-tools{gap:24px}
+  }
+
+  @media (max-width:900px){
+    .site-header{grid-template-columns:auto 1fr auto;gap:20px;min-height:64px;padding:8px 20px}
+    .brand{grid-column:2;grid-row:1;justify-self:center}
+    .brand img{width:66px}
+    .menu-toggle{display:block;grid-column:1;grid-row:1;margin-left:-6px;padding:0 6px;min-height:44px;border:0;background:none;cursor:pointer}
+    .header-tools{grid-column:3;grid-row:1;padding:0}
+    .header-tools .locale{display:none}
+    .cart-link{display:flex;align-items:center;min-height:44px}
+    .primary-nav{display:none;position:absolute;z-index:1;top:100%;inset-inline:0;align-items:stretch;padding:8px 20px 16px;border-bottom:1px solid #d0d2d3;background:var(--page)}
+    .site-header.menu-open .primary-nav{display:grid;gap:0}
+    .primary-nav a{display:flex;align-items:center;min-height:44px}
+    main{padding:40px 20px 56px}
+    .empty-cart{gap:19px}
+    .continue{min-height:52px;min-width:min(242px,100%);font-size:17px}
+    .site-footer{flex-direction:column;gap:12px;padding:16px 20px 24px;text-align:center}
+    .newsletter{width:min(100%,330px);gap:10px;flex-direction:column}
+    .newsletter-link{width:100%;text-align:left;min-height:44px}
+    .socials{gap:8px}
+    .socials a{min-width:44px;min-height:44px}
+  }
+</style>
+</head>
+<body>
+<header class="site-header">
+  <a class="brand" href="index.html"><img src="cdn/shop/files/slurp-logo_150x.svg" alt="Slurp Laboratories"></a>
+  <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="primary-nav">Menu</button>
+  <nav id="primary-nav" class="primary-nav" aria-label="Main navigation">
+    <a href="index.html">Home</a>
+    <a href="index.html#about">About</a>
+    <a href="collections/all.html">Formulas</a>
+    <a href="pages/shipping.html">Shipping</a>
+    <a href="pages/faq.html">FAQ</a>
+    <a href="pages/contact.html">Contact</a>
+  </nav>
+  <div class="header-tools">
+    <details class="locale">
+      <summary aria-label="Currency, USD">USD</summary>
+      <div class="locale-menu">
+        <a href="collections/all.html">USD · United States</a>
+        <a href="https://slurplaboratories.com/en-gb/collections/all">GBP · United Kingdom</a>
+        <a href="https://slurplaboratories.com/en-sg/collections/all">SGD · Singapore</a>
+      </div>
+    </details>
+    <a class="cart-link" href="cart.html" aria-current="page">Cart</a>
+    <details class="locale language">
+      <summary aria-label="Language, English"><span>EN</span></summary>
+      <div class="locale-menu">
+        <a href="collections/all.html">English</a>
+        <a href="https://slurplaboratories.com/ko/collections/all" lang="ko">한국어</a>
+        <a href="https://slurplaboratories.com/zh/collections/all" lang="zh-Hans">简体中文</a>
+      </div>
+    </details>
+  </div>
+</header>
+<main>
+  <div class="empty-cart">
+    <h1>Your cart is empty</h1>
+    <a class="continue" href="collections/all.html">Continue shopping</a>
+  </div>
+</main>
+<footer class="site-footer">
+  <div class="newsletter">
+    <span>Get notified of new innovations:</span>
+    <a class="newsletter-link" href="collections/all.html#NewsletterForm--footer" aria-label="Sign up for email updates">Email</a>
+  </div>
+  <nav class="socials" aria-label="Social media">
+    <a href="https://www.instagram.com/slurplaboratories/" aria-label="Instagram"><svg aria-hidden="true" version="1.1" x="0px" y="0px" viewBox="0 0 51.02 51.02" xml:space="preserve"> <g> <path fill-rule="evenodd" d="M25.51,4.64c6.8,0,7.61,0.02,10.28,0.15c2.48,0.12,3.83,0.52,4.73,0.88c1.19,0.46,2.04,1.01,2.93,1.9 s1.44,1.74,1.9,2.93c0.35,0.9,0.76,2.25,0.88,4.73c0.13,2.69,0.15,3.48,0.15,10.28s-0.02,7.61-0.15,10.28 c-0.12,2.48-0.52,3.83-0.88,4.73c-0.46,1.19-1.01,2.04-1.9,2.93c-0.89,0.89-1.74,1.44-2.93,1.9c-0.9,0.35-2.25,0.76-4.73,0.88 c-2.69,0.13-3.48,0.15-10.28,0.15s-7.61-0.02-10.28-0.15c-2.48-0.12-3.83-0.52-4.73-0.88c-1.19-0.46-2.04-1.01-2.93-1.9 c-0.89-0.89-1.44-1.74-1.9-2.93c-0.35-0.9-0.76-2.25-0.88-4.73c-0.13-2.69-0.15-3.48-0.15-10.28s0.02-7.61,0.15-10.28 c0.12-2.48,0.52-3.83,0.88-4.73c0.46-1.19,1.01-2.04,1.9-2.93s1.74-1.44,2.93-1.9c0.9-0.35,2.25-0.76,4.73-0.88 C17.91,4.67,18.71,4.64,25.51,4.64 M25.51,0.06c-6.91,0-7.78,0.03-10.49,0.16S10.46,0.77,8.84,1.4C7.16,2.05,5.75,2.92,4.33,4.33 S2.05,7.16,1.4,8.84c-0.63,1.62-1.06,3.47-1.18,6.18S0.06,18.6,0.06,25.51S0.09,33.29,0.22,36s0.55,4.56,1.18,6.18 c0.65,1.67,1.52,3.1,2.94,4.51c1.41,1.41,2.83,2.28,4.51,2.94c1.62,0.63,3.47,1.06,6.18,1.18c2.71,0.13,3.58,0.16,10.49,0.16 s7.78-0.03,10.49-0.16s4.56-0.55,6.18-1.18c1.67-0.65,3.1-1.52,4.51-2.94c1.41-1.41,2.28-2.83,2.94-4.51 c0.63-1.62,1.06-3.47,1.18-6.18c0.13-2.71,0.16-3.58,0.16-10.49s-0.03-7.78-0.16-10.49s-0.55-4.56-1.18-6.18 c-0.65-1.67-1.52-3.1-2.94-4.51s-2.83-2.28-4.51-2.94c-1.62-0.63-3.47-1.06-6.18-1.18C33.28,0.09,32.43,0.06,25.51,0.06z M25.51,12.45c-7.22,0-13.07,5.85-13.07,13.07s5.85,13.07,13.07,13.07s13.07-5.85,13.07-13.07S32.73,12.45,25.51,12.45z M25.51,34 c-4.69,0-8.48-3.8-8.48-8.48s3.8-8.48,8.48-8.48S34,20.83,34,25.51S30.2,34,25.51,34z M42.15,11.92c0,1.68-1.37,3.05-3.05,3.05 s-3.05-1.37-3.05-3.05s1.37-3.05,3.05-3.05C40.78,8.87,42.15,10.24,42.15,11.92z"/> </g> </svg></a>
+    <a href="https://www.facebook.com/slurplaboratories" aria-label="Facebook"><svg aria-hidden="true" version="1.1" x="0px" y="0px" viewBox="0 0 51.02 51.02" xml:space="preserve"> <path fill-rule="evenodd" d="M29.4,50.58V27.71h7.68l1.15-8.91H29.4v-5.69c0-2.58,0.72-4.34,4.42-4.34h4.72V0.8 c-0.82-0.11-3.62-0.35-6.88-0.35c-6.81,0-11.46,4.15-11.46,11.78v6.57h-7.7v8.91h7.69v22.87H29.4L29.4,50.58z"/> </svg></a>
+    <a href="https://www.tiktok.com/@slurplaboratories" aria-label="TikTok"><svg aria-hidden="true" viewBox="0 0 25 28" fill="currentColor"> <path fill-rule="evenodd" d="M22.9163 7.22843C21.5599 6.93293 20.3329 6.21935 19.4113 5.19009C18.4897 4.16082 17.9209 2.86878 17.7865 1.49938V0.90625H13.0921V19.3336C13.0931 20.1512 12.8343 20.9484 12.3525 21.6123C11.8707 22.2762 11.1902 22.773 10.4075 23.0325C9.62485 23.2919 8.7796 23.3009 7.99151 23.058C7.20342 22.8151 6.51246 22.3327 6.01649 21.6791C5.57216 21.1006 5.30007 20.4105 5.23101 19.6867C5.16194 18.963 5.29865 18.2346 5.62567 17.5838C5.9527 16.9331 6.45699 16.386 7.08153 16.0043C7.70606 15.6227 8.42592 15.4218 9.1597 15.4243C9.56551 15.422 9.9693 15.4811 10.3571 15.5996V10.8815C9.90581 10.8262 9.45103 10.8036 8.99641 10.8141C7.32182 10.8585 5.69662 11.3856 4.31982 12.331C2.94303 13.2764 1.87439 14.5991 1.24478 16.137C0.615171 17.6749 0.451909 19.3613 0.77499 20.9897C1.09807 22.6181 1.89347 24.1178 3.06379 25.3053C4.26322 26.5134 5.79809 27.341 7.47338 27.6829C9.14867 28.0248 10.8887 27.8657 12.4725 27.2256C14.0563 26.5856 15.4123 25.4936 16.3681 24.0884C17.324 22.6831 17.8367 21.0281 17.8409 19.3336V9.89749C19.7343 11.2373 22.0047 11.9541 24.3314 11.9465V7.36323C23.8744 7.36509 23.4184 7.31992 22.9707 7.22843H22.9163Z" fill-opacity="0.75"/> </svg></a>
+    <a href="https://www.youtube.com/channel/UCgppCBzJJXXL7maRZG6yDuA" aria-label="YouTube"><svg aria-hidden="true" version="1.1" x="0px" y="0px" viewBox="0 0 51.02 51.02" xml:space="preserve"> <path fill-rule="evenodd" d="M48.48,8.05c-1.64-3.04-3.42-3.59-7.05-3.81c-3.62-0.26-5.82-0.36-13.71-0.36c-7.91,0-14.5,0.11-18.12,0.36 C5.98,4.46,4.2,5.01,2.54,8.05C0.85,11.08-0.02,16.3-0.02,25.5v0.03c0,9.15,0.87,14.42,2.56,17.42c1.66,3.04,3.44,3.59,7.05,3.84 c3.62,0.22,10.22,0.35,18.13,0.35c7.89,0,10.09-0.13,13.72-0.35c3.63-0.26,5.41-0.81,7.05-3.84c1.71-3,2.57-8.26,2.57-17.42v-0.02 V25.5C51.05,16.31,50.18,11.08,48.48,8.05z M19.06,36.29V14.74l18.28,10.78L19.06,36.29z"/> </svg></a>
+  </nav>
+  <small>&copy; 2022 Slurp Laboratories</small>
+</footer>
+<script>
+  const menuButton = document.querySelector('.menu-toggle');
+  const header = document.querySelector('.site-header');
+
+  function toggleMenu(open) {
+    header.classList.toggle('menu-open', open);
+    menuButton.setAttribute('aria-expanded', String(open));
+  }
+
+  menuButton.addEventListener('click', () => toggleMenu(!header.classList.contains('menu-open')));
+  header.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && header.classList.contains('menu-open')) {
+      toggleMenu(false);
+      menuButton.focus();
+    }
+  });
+</script>
+</body>
+</html>
