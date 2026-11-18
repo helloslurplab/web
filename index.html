@@ -553,10 +553,9 @@ footer a:hover{color:var(--white)}
           return Math.min(maxScroll, Math.max(0, center - track.clientWidth / 2));
         });
         var next = stops.findIndex(function(left){ return left > track.scrollLeft + 1; });
-        var nextVideo = heroVideos[Math.max(0, next)];
-        if(hasBufferedPlayback(nextVideo)){
-          animateHeroScroll(stops[Math.max(0, next)], next < 0 ? 850 : 650);
-        }
+        var nextIndex = Math.max(0, next);
+        preloadHeroVideo(heroVideos[nextIndex]);
+        animateHeroScroll(stops[nextIndex], next < 0 ? 850 : 650);
         scheduleAutoScroll();
       }, 1500);
     }
